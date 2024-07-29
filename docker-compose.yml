@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+  api:
+    image: bitnami/postgresql:latest
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRESQL_USERNAME=big_stream
+      - POSTGRESQL_PASSWORD=big_stream
+      - POSTGRESQL_DATABASE=big_stream
