@@ -23,6 +23,13 @@ export class UserRepository implements IUserRepository {
     return await prisma.user.findUnique({ where: { id } })
   }
 
+  async findAll(page: number, perPage: number): Promise<User[]> {
+    return await prisma.user.findMany({
+      skip: (page - 1) * perPage,
+      take: perPage,
+    })
+  }
+
   async update(user: User): Promise<User> {
     return await prisma.user.update({ where: { id: user.id }, data: user })
   }
