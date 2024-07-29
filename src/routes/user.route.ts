@@ -6,6 +6,8 @@ import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { makeCreateUser } from '@factories/user/create-user.make'
 import { makeCreateCompleteUser } from '@factories/user/create-complete-user.make'
+import { makeGetUserById } from '@factories/user/get-user-by-id.make'
+import { GetUserByIdSchema } from '@dtos/user/get-by-id.dto'
 
 export async function userRoutes(app: FastifyInstance) {
   const createUserController = makeCreateUser()
@@ -21,7 +23,7 @@ export async function userRoutes(app: FastifyInstance) {
 
   const createCompleteUserController = makeCreateCompleteUser()
   app.withTypeProvider<ZodTypeProvider>().post(
-    '/admin/users',
+    '/users/complete',
     {
       schema: {
         body: CreateCompleteUserSchema,
@@ -29,4 +31,13 @@ export async function userRoutes(app: FastifyInstance) {
     },
     createCompleteUserController.handle.bind(createCompleteUserController),
   )
+
+  const getUserByIdController = makeGetUserById()
+  app
+    .withTypeProvider<ZodTypeProvider>()
+    .get(
+      '/users/:id',
+      { schema: { params: GetUserByIdSchema } },
+      getUserByIdController.handle.bind(getUserByIdController),
+    )
 }
