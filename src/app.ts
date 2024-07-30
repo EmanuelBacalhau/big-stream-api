@@ -1,10 +1,10 @@
-import { fastify } from 'fastify'
 import fastifyCors from '@fastify/cors'
-import { userRoutes } from 'routes/user.route'
+import { fastify } from 'fastify'
 import {
   serializerCompiler,
   validatorCompiler,
 } from 'fastify-type-provider-zod'
+import { userRoutes } from 'routes/user.route'
 
 export const app = fastify()
 

@@ -11,8 +11,6 @@ export class GetAllUserController {
   ): Promise<Response> {
     const { page, perPage } = request.query
 
-    console.log({ page, perPage })
-
     const users = await this.getAllUserUseCase.execute(page, perPage)
 
     return response.send({ users: users })

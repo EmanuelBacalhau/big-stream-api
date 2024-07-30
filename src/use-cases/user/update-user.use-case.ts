@@ -1,8 +1,8 @@
 import type { UpdateUserBodyDTO } from '@dtos/user/update.dto'
 import type { User } from '@prisma/client'
 import type { IUserRepository } from '@repositories/i-user.repository'
-import { UserNotFound } from '@use-cases/errors/user-not-found'
 import { EmailAlreadyExists } from '@use-cases/errors/email-already-exists'
+import { UserNotFound } from '@use-cases/errors/user-not-found'
 import { hash } from 'bcryptjs'
 
 type IRequest = UpdateUserBodyDTO

@@ -2,21 +2,21 @@ import {
   CreateCompleteUserSchema,
   CreateUserSchema,
 } from '@dtos/user/create.dto'
-import type { FastifyInstance } from 'fastify'
-import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import { makeCreateUser } from '@factories/user/create-user.make'
-import { makeCreateCompleteUser } from '@factories/user/create-complete-user.make'
-import { makeGetUserById } from '@factories/user/get-user-by-id.make'
-import { GetUserByIdSchema } from '@dtos/user/get-by-id.dto'
-import { makeGetAllUser } from '@factories/user/get-all-user.make'
 import { GetAllUserSchema } from '@dtos/user/get-all.dto'
-import { makeUpdateUser } from '@factories/user/update-user.make'
+import { GetUserByIdSchema } from '@dtos/user/get-by-id.dto'
 import {
   UpdateCompleteUserBodySchema,
   UpdateUserBodySchema,
   UpdateUserParamsSchema,
 } from '@dtos/user/update.dto'
+import { makeCreateCompleteUser } from '@factories/user/create-complete-user.make'
+import { makeCreateUser } from '@factories/user/create-user.make'
+import { makeGetAllUser } from '@factories/user/get-all-user.make'
+import { makeGetUserById } from '@factories/user/get-user-by-id.make'
 import { makeUpdateCompleteUser } from '@factories/user/update-complete-user.make'
+import { makeUpdateUser } from '@factories/user/update-user.make'
+import type { FastifyInstance } from 'fastify'
+import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 
 export async function userRoutes(app: FastifyInstance) {
   const createUserController = makeCreateUser()

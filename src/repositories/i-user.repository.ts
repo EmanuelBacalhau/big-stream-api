@@ -1,4 +1,3 @@
-import type { User } from '@prisma/client'
 import type {
   CreateCompleteUserDTO,
   CreateUserDTO,
@@ -7,6 +6,7 @@ import type {
   UpdateCompleteUserBodyDTO,
   UpdateUserBodyDTO,
 } from '@dtos/user/update.dto'
+import type { User } from '@prisma/client'
 
 export interface IUserRepository {
   create(data: CreateUserDTO | CreateCompleteUserDTO): Promise<User>
