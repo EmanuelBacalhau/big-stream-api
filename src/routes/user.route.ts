@@ -8,6 +8,8 @@ import { makeCreateUser } from '@factories/user/create-user.make'
 import { makeCreateCompleteUser } from '@factories/user/create-complete-user.make'
 import { makeGetUserById } from '@factories/user/get-user-by-id.make'
 import { GetUserByIdSchema } from '@dtos/user/get-by-id.dto'
+import { makeGetAllUser } from '@factories/user/get-all-user.make'
+import { GetAllUserSchema } from '@dtos/user/get-all.dto'
 
 export async function userRoutes(app: FastifyInstance) {
   const createUserController = makeCreateUser()
@@ -40,4 +42,15 @@ export async function userRoutes(app: FastifyInstance) {
       { schema: { params: GetUserByIdSchema } },
       getUserByIdController.handle.bind(getUserByIdController),
     )
+
+  const getAllUsersController = makeGetAllUser()
+  app.withTypeProvider<ZodTypeProvider>().get(
+    '/users',
+    {
+      schema: {
+        querystring: GetAllUserSchema,
+      },
+    },
+    getAllUsersController.handle.bind(getAllUsersController),
+  )
 }
