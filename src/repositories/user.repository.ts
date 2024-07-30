@@ -5,13 +5,13 @@ import type {
 } from '@dtos/user/create.dto'
 import type { IUserRepository } from './i-user.repository'
 import { prisma } from '@lib/prisma'
+import type {
+  UpdateCompleteUserBodyDTO,
+  UpdateUserBodyDTO,
+} from '@dtos/user/update.dto'
 
 export class UserRepository implements IUserRepository {
-  async create(data: CreateUserDTO): Promise<User> {
-    return await prisma.user.create({ data })
-  }
-
-  async createComplete(data: CreateCompleteUserDTO): Promise<User> {
+  async create(data: CreateUserDTO | CreateCompleteUserDTO): Promise<User> {
     return await prisma.user.create({ data })
   }
 
@@ -30,8 +30,11 @@ export class UserRepository implements IUserRepository {
     })
   }
 
-  async update(user: User): Promise<User> {
-    return await prisma.user.update({ where: { id: user.id }, data: user })
+  async update(
+    id: string,
+    data: UpdateUserBodyDTO | UpdateCompleteUserBodyDTO,
+  ): Promise<User> {
+    return await prisma.user.update({ where: { id: id }, data })
   }
 
   async delete(id: string): Promise<void> {
