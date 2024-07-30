@@ -2,6 +2,7 @@ import {
   CreateCompleteUserSchema,
   CreateUserSchema,
 } from '@dtos/user/create.dto'
+import { DeleteUserParamsSchema } from '@dtos/user/delete.dto'
 import { GetAllUserSchema } from '@dtos/user/get-all.dto'
 import { GetUserByIdSchema } from '@dtos/user/get-by-id.dto'
 import {
@@ -11,6 +12,7 @@ import {
 } from '@dtos/user/update.dto'
 import { makeCreateCompleteUser } from '@factories/user/create-complete-user.make'
 import { makeCreateUser } from '@factories/user/create-user.make'
+import { makeDeleteUser } from '@factories/user/delete-user.make'
 import { makeGetAllUser } from '@factories/user/get-all-user.make'
 import { makeGetUserById } from '@factories/user/get-user-by-id.make'
 import { makeUpdateCompleteUser } from '@factories/user/update-complete-user.make'
@@ -83,5 +85,16 @@ export async function userRoutes(app: FastifyInstance) {
       },
     },
     updateCompleteUserController.handle.bind(updateCompleteUserController),
+  )
+
+  const deleteUserController = makeDeleteUser()
+  app.withTypeProvider<ZodTypeProvider>().delete(
+    '/users/:id',
+    {
+      schema: {
+        params: DeleteUserParamsSchema,
+      },
+    },
+    deleteUserController.handle.bind(deleteUserController),
   )
 }
