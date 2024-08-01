@@ -6,11 +6,20 @@ import { prisma } from '@lib/prisma'
 
 export class CategoryRepository implements ICategoryRepository {
   async create(data: CreateCategoryBodyDTO): Promise<Category> {
-    return await prisma.category.create({ data })
+    return await prisma.category.create({
+      data: {
+        name: data.name,
+        slug: data.name.toLowerCase().replace(' ', '-'),
+      },
+    })
   }
 
   async findByName(name: string): Promise<Category | null> {
     return await prisma.category.findFirst({ where: { name } })
+  }
+
+  async findBySlug(slug: string): Promise<Category | null> {
+    return await prisma.category.findFirst({ where: { slug } })
   }
 
   async findById(id: string): Promise<Category | null> {
