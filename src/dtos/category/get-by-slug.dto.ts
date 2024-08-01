@@ -4,4 +4,6 @@ export const GetCategoryBySlugParamsSchema = z.object({
   slug: z.string(),
 })
 
-export type GetCategoryBySlugDTO = z.infer<typeof GetCategoryBySlugParamsSchema>
+export type GetCategoryBySlugParamsDTO = z.infer<
+  typeof GetCategoryBySlugParamsSchema
+>
