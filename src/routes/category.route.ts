@@ -1,4 +1,5 @@
 import { CreateCategoryBodySchema } from '@dtos/category/create.dto'
+import { DeleteManyCategoryBodySchema } from '@dtos/category/delete-many.dto'
 import { DeleteCategoryParamsSchema } from '@dtos/category/delete.dto'
 import { GetAllCategoryQuerySchema } from '@dtos/category/get-all.dto'
 import { GetCategoryByIdParamsSchema } from '@dtos/category/get-by-id.dto'
@@ -9,6 +10,7 @@ import {
 } from '@dtos/category/update.dto'
 import { makeCreateCategory } from '@factories/category/create-category.make'
 import { makeDeleteCategory } from '@factories/category/delete-category.make'
+import { makeDeleteManyCategory } from '@factories/category/delete-many-category.make'
 import { makeGetAllCategory } from '@factories/category/get-all-category.make'
 import { makeGetCategoryById } from '@factories/category/get-category-by-id.make'
 import { makeGetCategoryBySlug } from '@factories/category/get-category-by-slug.make'
@@ -82,5 +84,16 @@ export async function categoryRoutes(app: FastifyInstance) {
       },
     },
     deleteCategoryController.handle.bind(deleteCategoryController),
+  )
+
+  const deleteManyCategoryController = makeDeleteManyCategory()
+  app.withTypeProvider<ZodTypeProvider>().delete(
+    '/categories',
+    {
+      schema: {
+        body: DeleteManyCategoryBodySchema,
+      },
+    },
+    deleteManyCategoryController.handle.bind(deleteManyCategoryController),
   )
 }
