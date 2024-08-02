@@ -34,7 +34,13 @@ export class CategoryRepository implements ICategoryRepository {
   }
 
   async update(id: string, data: UpdateCategoryBodyDTO): Promise<Category> {
-    return await prisma.category.update({ where: { id }, data })
+    return await prisma.category.update({
+      where: { id },
+      data: {
+        name: data.name,
+        slug: data.name.toLowerCase().replace(' ', '-'),
+      },
+    })
   }
 
   async delete(id: string): Promise<void> {

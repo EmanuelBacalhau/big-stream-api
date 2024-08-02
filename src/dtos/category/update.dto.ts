@@ -5,9 +5,7 @@ export const UpdateCategoryParamsSchema = z.object({
 })
 
 export const UpdateCategoryBodySchema = z.object({
-  name: z.string().optional(),
-  email: z.string().email().optional(),
-  password: z.string().min(8).optional(),
+  name: z.string(),
 })
 
 export type UpdateCategoryParamsDTO = z.infer<typeof UpdateCategoryParamsSchema>

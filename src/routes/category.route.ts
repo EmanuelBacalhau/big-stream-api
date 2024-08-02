@@ -2,10 +2,15 @@ import { CreateCategoryBodySchema } from '@dtos/category/create.dto'
 import { GetAllCategoryQuerySchema } from '@dtos/category/get-all.dto'
 import { GetCategoryByIdParamsSchema } from '@dtos/category/get-by-id.dto'
 import { GetCategoryBySlugParamsSchema } from '@dtos/category/get-by-slug.dto'
+import {
+  UpdateCategoryBodySchema,
+  UpdateCategoryParamsSchema,
+} from '@dtos/category/update.dto'
 import { makeCreateCategory } from '@factories/category/create-category.make'
 import { makeGetAllCategory } from '@factories/category/get-all-category.make'
 import { makeGetCategoryById } from '@factories/category/get-category-by-id.make'
 import { makeGetCategoryBySlug } from '@factories/category/get-category-by-slug.make'
+import { makeUpdateCategory } from '@factories/category/update-category.make'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 
@@ -52,5 +57,17 @@ export async function categoryRoutes(app: FastifyInstance) {
       },
     },
     getAllCategoryController.handle.bind(getAllCategoryController),
+  )
+
+  const updateCategoryController = makeUpdateCategory()
+  app.withTypeProvider<ZodTypeProvider>().patch(
+    '/categories/:id',
+    {
+      schema: {
+        body: UpdateCategoryBodySchema,
+        params: UpdateCategoryParamsSchema,
+      },
+    },
+    updateCategoryController.handle.bind(updateCategoryController),
   )
 }
