@@ -1,4 +1,5 @@
 import { CreateCategoryBodySchema } from '@dtos/category/create.dto'
+import { DeleteCategoryParamsSchema } from '@dtos/category/delete.dto'
 import { GetAllCategoryQuerySchema } from '@dtos/category/get-all.dto'
 import { GetCategoryByIdParamsSchema } from '@dtos/category/get-by-id.dto'
 import { GetCategoryBySlugParamsSchema } from '@dtos/category/get-by-slug.dto'
@@ -7,6 +8,7 @@ import {
   UpdateCategoryParamsSchema,
 } from '@dtos/category/update.dto'
 import { makeCreateCategory } from '@factories/category/create-category.make'
+import { makeDeleteCategory } from '@factories/category/delete-category.make'
 import { makeGetAllCategory } from '@factories/category/get-all-category.make'
 import { makeGetCategoryById } from '@factories/category/get-category-by-id.make'
 import { makeGetCategoryBySlug } from '@factories/category/get-category-by-slug.make'
@@ -69,5 +71,16 @@ export async function categoryRoutes(app: FastifyInstance) {
       },
     },
     updateCategoryController.handle.bind(updateCategoryController),
+  )
+
+  const deleteCategoryController = makeDeleteCategory()
+  app.withTypeProvider<ZodTypeProvider>().delete(
+    '/categories/:id',
+    {
+      schema: {
+        params: DeleteCategoryParamsSchema,
+      },
+    },
+    deleteCategoryController.handle.bind(deleteCategoryController),
   )
 }
